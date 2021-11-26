@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
+:root{
+    --main-bg : hsl(0, 0%, 98%);
+    --white : hsl(0, 0%, 100%);
+
+    --title-color : hsl(234, 12%, 34%);
+    --loan-button-color : hsl(0, 78%, 62%);
+    --bank-button-color : hsl(34, 97%, 64%);;
+    --work-button-color : hsl(212, 86%, 64%);
+}
+
+*{
+    margin : 0;
+    padding : 0;
+    box-sizing : border-box;
+}
+
+body{
+    font-family : 'Ubuntu', sans-serif;
+    background-color : var(--main-bg);
+    color : hsl(229, 6%, 66%);
+}
+
+.toggle{
+    visibility: hidden;
+}
+
+.header{
+    background-color : #000;
+    padding : 1.5em;
+}
+
+.header__title{
+    color : var(--white);
+}
+
+.main{
+    max-width : 300px;
+    margin-inline : auto;
+}
+
+.container{
+    margin-top : 3rem;
+}
+
+.card{
+    background-color : var(--white);
+
+    margin-bottom : 2rem;
+    padding : 2em;
+
+    border-radius : 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card__title{
+    margin-bottom : 1rem;
+    color : var(--title-color)
+}
+
+.flex{
+    display : flex;
+    justify-content: space-between;
+    align-items : center;
+}
+
+.loan{
+    margin-top : 2rem;
+}
+
+.button{
+    border : none;
+
+    width : 100%;
+    padding-block : 1em;
+    border-radius : 2rem;
+    margin-top : 5rem;
+
+    color : var(--white);
+    font-size : 1rem;
+    font-weight : 700;
+}
+
+.button--loan{
+    background-color : var(--loan-button-color);
+}
+
+.button--bank{
+    background-color : var(--bank-button-color);
+}
+
+.button--work{
+    background-color : var(--work-button-color);
+    margin-top : 1rem;
+}
+
+.button--loan__return{
+    margin-top : 1rem;
+}
+
+
+
+@media(min-width : 768px){
+
+    .main{
+        max-width : 80%;
+        margin-inline : auto;
+    }
+
+    .container{
+        display : flex;
+        justify-content : space-between;
+    }
+
+    .card{
+        flex-basis : 33%;
+    }
+
+    .card__title{
+        margin-bottom : 3rem;
+    }
+
+    .button:hover{
+        cursor : pointer;
+        transform : scale(1.025);
+        transition : all 250ms;
+    }
+
+    .button--loan:hover{
+        color : var(--loan-button-color);
+        background-color: var(--white);
+    
+        border : 1px solid var(--loan-button-color);
+        box-shadow : 3px 5px 10px var(--loan-button-color);
+    }
+    
+    .button--bank:hover{
+        color : var(--bank-button-color);
+        background-color: var(--white);
+    
+        border : 1px solid var(--bank-button-color);
+        box-shadow : 3px 5px 10px var(--bank-button-color);
+    }
+    
+    .button--work:hover{
+        color : var(--work-button-color);
+        background-color: var(--white);
+    
+        border : 1px solid var(--work-button-color);
+        box-shadow : 3px 5px 10px -2px var(--work-button-color);
+    }
+}
