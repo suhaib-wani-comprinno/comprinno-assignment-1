@@ -18,15 +18,14 @@
                 <h2 class="card__title">Joe Banker</h2>
                 <div class="balance flex">
                     <span>Balance</span>
-                    <span id="bank-balance"></span>
+                    <span id="bank-balance">1000 INR</span>
                 </div>
                 <div class="loan flex toggle" id="outstanding">
                     <span>Outstanding balance</span>
-                    <span id="loan-balance"></span>
+                    <span id="loan-balance">0 INR</span>
                 </div>
                 <input type="button" value="Get a loan" class="button button--loan" id="loan-button">
-                <input type="button" value="Return loan" class="toggle button button--loan button--loan__return" id="return-loan">
-
+                <input type="button" value="Return loan" class="toggle button button--loan button--loan__return" id="return-loan-button">
             </div>
             <div class="work card">
                 <h2 class="card__title">Work</h2>
@@ -38,7 +37,20 @@
                 <input type="button" value="Work" class="button button--work" id="work-button">
             </div>
             <div class="card">
-
+                <h2 class="card__title">Laptop List</h2>
+                <label for="laptop-dropdown">Select one</label>
+                <select name="laptop" id="laptop-dropdown">
+                    <option value="1">---Choose a Laptop---</option>
+                </select>
+                <ul id="specs"></ul>
+            </div>
+        </div>
+        <div class="card toggle flex" id="buy--card">
+            <img src="https://www.freeiconspng.com/thumbs/laptop-png/laptop-png-26.png" alt="" aria-hidden="true">
+            <p id="desc"></p>
+            <div class="price__buy">
+                <p class="toggle" id="pricing">Price: INR <span id="price"></span></p>
+                <input type="button" value="Buy Now" class="button button--buy" id="buy-button">
             </div>
         </div>
     </main>
