@@ -24,7 +24,7 @@ loanButton.addEventListener('click', () => {
         while (!loan) {
             loan = parseInt(prompt('Enter amount for loan'));
         }
-        if (loan >= currentBalance) {
+        if (loan > (currentBalance * 2)) {
             alert('Loan amount cannot be more than twice of Bank balance');
         }
         else {
@@ -127,6 +127,7 @@ fetch('https://noroff-komputer-store-api.herokuapp.com/computers')
             dropdown.append(createOption);
             createOption.addEventListener('click', () => {
                 buyCard.classList.remove('toggle');
+                buyCard.classList.add('d-flex', 'justify-content-between', 'w-100', 'align-items-center');
                 console.log(dat.specs);
                 featureList.innerHTML = "Specs: ";
                 for (let spec of dat.specs) {
@@ -144,10 +145,7 @@ fetch('https://noroff-komputer-store-api.herokuapp.com/computers')
 const buyButton = document.querySelector('#buy-button');
 
 buyButton.addEventListener('click', () => {
-    if (price.innerText === '') {
-        alert('Select a laptop first');
-    }
-    else if (totalBalance >= parseInt(price.innerText) && currentBalance !== 0) {
+        if (totalBalance >= parseInt(price.innerText) && currentBalance !== 0) {
         alert('Successfully purchased');
         console.log(totalBalance, currentBalance);
         totalBalance -= parseInt(price.innerText);
@@ -161,6 +159,6 @@ buyButton.addEventListener('click', () => {
         console.log(totalBalance, currentBalance);
     }
     else {
-        alert('Earn More! Work More!');
+        alert('Insufficient Balance! Work more!');
     }
 });
