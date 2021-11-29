@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
+$main-bg : hsl(0, 0%, 98%);
+
+$title-color : hsl(234, 12%, 34%);
+
+*{
+    margin : 0;
+    padding : 0;
+    box-sizing : border-box;
+}
+
+body{
+    font-family : 'Ubuntu', sans-serif;
+    background-color : $main-bg;
+    color : hsl(229, 6%, 66%);
+}
+
+.card__title{
+    margin-bottom : 1.5rem;
+    color : $title-color;
+}
+
+.toggle{
+    display : none;
+}
+
+@media(min-width : 768px){
+
+    .card__title{
+        margin-bottom : 3rem;
+    }
+}
