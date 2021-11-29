@@ -8,7 +8,8 @@ const outstandingBal = document.querySelector('#outstanding');
 const returnLoanButton = document.querySelector('#return-loan-button');
 
 const toggle = () => {
-    outstandingBal.classList.toggle('toggle');
+    outstandingBal.classList.remove('toggle');
+    outstandingBal.classList.add('d-flex', 'justify-content-between', 'mt-4');
     returnLoanButton.classList.toggle('toggle');
     loanButton.classList.toggle('toggle');
 }
@@ -127,7 +128,7 @@ fetch('https://noroff-komputer-store-api.herokuapp.com/computers')
             dropdown.append(createOption);
             createOption.addEventListener('click', () => {
                 buyCard.classList.remove('toggle');
-                buyCard.classList.add('d-flex', 'justify-content-between', 'w-100', 'align-items-center');
+                buyCard.classList.add('d-flex', 'justify-content-around', 'w-100', 'align-items-center');
                 console.log(dat.specs);
                 featureList.innerHTML = "Specs: ";
                 for (let spec of dat.specs) {
