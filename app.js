@@ -1,142 +1,198 @@
-const balance = document.querySelector('#bank-balance');
+const laptopsAPI = 'https://noroff-komputer-store-api.herokuapp.com/computers'; //API for laptops
+const imagesAPI = 'https://noroff-komputer-store-api.herokuapp.com/'; //API for laptops
+
+const availableBalance = document.querySelector('#availableBalance'); // Available balance at any point
 
 let isLoanTaken = false;
-let currentBalance = parseInt(balance.innerText);
 
-const loanButton = document.querySelector('#loan-button');
-const outstandingBal = document.querySelector('#outstanding');
-const returnLoanButton = document.querySelector('#return-loan-button');
+let balanceCard = document.querySelector('#balanceCard');
+let currentBalance = parseInt(availableBalance.innerText); //User balance for operations
 
-const toggle = () => {
-    outstandingBal.classList.remove('toggle');
-    outstandingBal.classList.add('d-flex', 'justify-content-between', 'mt-4');
-    returnLoanButton.classList.toggle('toggle');
-    loanButton.classList.toggle('toggle');
+const outstandingBalanceElement = document.querySelector('#outstandingBalanceElement');  //For toggling the outstanding balance visiblity
+const pendingLoanAmount = document.querySelector('#pendingLoanAmount'); //For updating loan pending amount
+const totalBalanceElement = document.querySelector('#totalBalanceElement');  //For toggling the total balance visiblity
+
+const getLoanButton = document.querySelector('#getLoanButton');  //For getting a loan
+
+// Function for creating return loan buttons
+const returnLoanButton = document.createElement('button');
+const createReturnLoanButtonFunction = () =>{
+    returnLoanButton.innerText = 'Return Loan';
+    returnLoanButton.classList.add('btn', 'btn-lg', 'btn-outline-danger', 'mt-3', 'w-100');
+    getLoanButton.insertAdjacentElement('afterend', returnLoanButton);
 }
 
-const loanBalance = document.querySelector('#loan-balance');
+const removeLoanButton = () =>{
+    balanceCard.removeChild(returnLoanButton);
+}
 
-let totalBalance = currentBalance;
-console.log(totalBalance);
+// Function for toggling visibility and adding classes upon activation
+const toggle = () =>{
+    outstandingBalanceElement.classList.remove('toggle');
+    outstandingBalanceElement.classList.add('d-flex', 'justify-content-between', 'mt-3');
+    totalBalanceElement.classList.remove('toggle');
+    totalBalanceElement.classList.add('d-flex', 'justify-content-between', 'mt-3');
+}
+const removeToggle = () => {
+    outstandingBalanceElement.classList.add('toggle');
+    outstandingBalanceElement.classList.remove('d-flex', 'justify-content-between', 'mt-3');
+    totalBalanceElement.classList.add('toggle');
+    totalBalanceElement.classList.remove('d-flex', 'justify-content-between', 'mt-3');
+}
 
-loanButton.addEventListener('click', () => {
+const totalBalanceDisplay = document.querySelector('#totalBalanceDisplay');
+totalBalance = currentBalance;
+console.log(totalBalance)
+var loanAmount = 0;
+
+getLoanButton.addEventListener('click', () => {
     if (!isLoanTaken) {
-        let loan = parseInt(prompt('Enter amount for loan'));
-        while (!loan) {
-            loan = parseInt(prompt('Enter amount for loan'));
+        loanAmount = parseInt(prompt('Enter amount for loan'));
+        while (!loanAmount) {
+            loanAmount = parseInt(prompt('Enter amount for loan'));
         }
-        if (loan > (currentBalance * 2)) {
-            alert('Loan amount cannot be more than twice of Bank balance');
+
+        if (loanAmount > (currentBalance * 2)) {
+            alert('Loan amount cannot be more than twice of current balance');
         }
         else {
             alert('Loan Granted');
             toggle();
-            loanBalance.innerText = `${loan} INR`;
-            totalBalance = currentBalance + loan;
-            console.log(totalBalance, currentBalance);
+            createReturnLoanButtonFunction();
+            pendingLoanAmount.innerText = `${loanAmount} INR`;
+            totalBalance += loanAmount;
+            totalBalanceDisplay.innerText = `${totalBalance} INR`;
+            console.log(totalBalance);
             isLoanTaken = true;
         }
     }
     else {
         alert('Repay previous loan')
     }
-});
+})
 
-const bankButton = document.querySelector('#bank-button');
-const pay = document.querySelector('#pay');
+// For updating Pay in Work card
+const payAmount = document.querySelector('#payAmount');
+
+// Creating a function for sum
+let sum = 0 ;
+const add = () =>{
+    return sum += 100
+}
+
+//Selecting the work button and adding event listener for increasing pay by 100
+const workButton = document.querySelector('#workButton');
+
+workButton.addEventListener('click', () =>{
+    payAmount.innerText = `${add()} INR`;
+})
+
+const bankButton = document.querySelector('#bankButton');
 
 bankButton.addEventListener('click', () => {
-    let transferAmount = parseInt(pay.innerText);
+
+    let transferAmount = parseInt(payAmount.innerText);
+    let deductAmount = ((transferAmount * 10) / 100);
+
     if (!isLoanTaken) {
         currentBalance += transferAmount;
         totalBalance += transferAmount;
-        console.log(totalBalance, currentBalance);
+        console.log(totalBalance, currentBalance)
     }
-    else {
-        let loan = parseInt(loanBalance.innerText);
-        let deduct = ((transferAmount * 10) / 100);
-        transferAmount -= deduct;
+
+    else if(isLoanTaken) {
+        if (loanAmount - deductAmount >= 0 ){
+        transferAmount -= deductAmount;
         currentBalance += transferAmount;
+        loanAmount -= deductAmount;
+        totalBalance = currentBalance + loanAmount;
+        totalBalanceDisplay.innerText = `${totalBalance} INR`;
         console.log(totalBalance, currentBalance);
-        loan -= deduct;
-        totalBalance = currentBalance + loan;
-        console.log(totalBalance, currentBalance);
-        loanBalance.innerText = `${loan} INR`;
-        if (loan <= 0) {
+        pendingLoanAmount.innerText = `${loanAmount} INR`;
+        if (loanAmount <= 0) {
             isLoanTaken = false;
-            toggle();
-            loanBalance.innerText = `0 INR`;
+            removeToggle();
+            pendingLoanAmount.innerText = `0 INR`;
         }
     }
-    balance.innerText = `${currentBalance} INR`;
-    pay.innerText = `0 INR`;
-    sum = 0;
-});
-
-returnLoanButton.addEventListener('click', () => {
-    let returnAmount = parseInt(pay.innerText);
-    let loan = parseInt(loanBalance.innerText);
-    loan -= returnAmount;
-    loanBalance.innerText = `${loan} INR`;
-    pay.innerText = `0 INR`;
-    sum = 0;
-
-    if (loan <= 0) {
-        toggle();
-        isLoanTaken = false;
-        loanBalance.innerText = `0 INR`;
-        totalBalance = currentBalance;
-        console.log(totalBalance, currentBalance);
-    } else {
-        totalBalance = currentBalance + loan;
-        console.log(totalBalance, currentBalance);
     }
-
+    availableBalance.innerText = `${currentBalance} INR`;
+    payAmount.innerText = `0 INR`;
+    sum = 0;
 })
 
-const workButton = document.querySelector('#work-button');
+const returnLoanFunction = () =>{
+    let returnAmount = parseInt(payAmount.innerText);
 
-let sum = 0;
-add = () => {
-    return sum += 100;
-};
+    if(loanAmount>=returnAmount){
+        loanAmount -= returnAmount;
+        totalBalance -=returnAmount;
+        pendingLoanAmount.innerText = `${loanAmount} INR`;
+        totalBalanceDisplay.innerText = `${totalBalance} INR`;
+        payAmount.innerText = `0 INR`;
+        sum = 0;
+    }
 
-workButton.addEventListener('click', () => {
-    pay.innerText = `${add()} INR`;
-});
+    else if(returnAmount > loanAmount){
+        returnAmount -= loanAmount;
+        totalBalance -= loanAmount;
+        loanAmount = 0;
+        payAmount.innerText = `${returnAmount} INR`;
+    }
 
-const dropdown = document.querySelector('#laptop-dropdown');
+    if(loanAmount===0){
+        removeLoanButton();
+        removeToggle();
+        alert('Loan Repaid');
+        isLoanTaken = false;
+    }
+}
+
+returnLoanButton.addEventListener('click', returnLoanFunction);
+
+const dropdown = document.querySelector('#laptopDropdown');
 
 const featureList = document.querySelector('#specs');
+
+const buyCard = document.querySelector('#buyCard');
 
 const desc = document.querySelector('#desc');
 
 const price = document.querySelector('#price');
 
-const buyCard = document.querySelector('#buy--card');
 
 const pricing = document.querySelector('#pricing');
 
-fetch('https://noroff-komputer-store-api.herokuapp.com/computers')
+const createImage = document.createElement('img');
+createImage.classList.add('img');
+const temp = document.querySelector('#temp');
+fetch(laptopsAPI)
     .then(res => {
         return res.json();
     })
     .then(data => {
+        console.log(data);
         for (let dat of data) {
             const createOption = document.createElement('option');
             createOption.innerText = dat.title;
-            console.log(createOption.innerText);
             dropdown.append(createOption);
-            createOption.addEventListener('click', () => {
-                buyCard.classList.remove('toggle');
-                buyCard.classList.add('d-flex', 'justify-content-around', 'w-100', 'align-items-center');
-                console.log(dat.specs);
-                featureList.innerHTML = "Specs: ";
+            createOption.addEventListener('click', () => {               
+                featureList.innerText = "Specs: ";
+                if(dat.id===5){
+                    createImage.setAttribute('src', `${imagesAPI}assets/images/${dat.id}.png`);
+                }
+                else{
+                    createImage.setAttribute('src', `${imagesAPI}${dat.image}`);
+                }
+                document.querySelector('#imageHolder').append(createImage);
                 for (let spec of dat.specs) {
                     const createSpecs = document.createElement('li');
                     createSpecs.innerText = spec;
                     featureList.append(createSpecs);
                 }
+                buyCard.classList.remove('toggle');
+                temp.classList.add('d-flex', 'justify-content-around', 'w-100', 'align-items-center');
+                console.log(`${imagesAPI}${dat.image}`);
                 desc.innerText = dat.description;
                 price.innerText = `${dat.price}`;
                 pricing.classList.remove('toggle');
@@ -147,23 +203,26 @@ fetch('https://noroff-komputer-store-api.herokuapp.com/computers')
         alert('Error', e);
     })
 
-const buyButton = document.querySelector('#buy-button');
+// const buyButton = document.querySelector('#buy-button');
 
-buyButton.addEventListener('click', () => {
-        if (totalBalance >= parseInt(price.innerText) && currentBalance !== 0) {
-        alert('Successfully purchased');
-        console.log(totalBalance, currentBalance);
-        totalBalance -= parseInt(price.innerText);
-        if (parseInt(loanBalance.innerText)) {
-            currentBalance = currentBalance + parseInt(loanBalance.innerText) - parseInt(price.innerText);
-            balance.innerText = `${currentBalance} INR`;
-        } else {
-            currentBalance -= parseInt(price.innerText);
-            balance.innerText = `${currentBalance} INR`;
-        }
-        console.log(totalBalance, currentBalance);
-    }
-    else {
-        alert('Insufficient Balance! Work more!');
-    }
-});
+// buyButton.addEventListener('click', () => {
+//         if (totalBalance >= parseInt(price.innerText) && currentBalance !== 0) {
+//         alert('Successfully purchased');
+//         console.log(totalBalance, currentBalance);
+//         totalBalance -= parseInt(price.innerText);
+//         balance.innerText = `${currentBalance}`;
+//         currentBalance = parseInt(totalBalance) - parseInt(price.innerText);
+//             if (parseInt(loanBalance.innerText)) {
+//             currentBalance = currentBalance + parseInt(loanBalance.innerText) - parseInt(price.innerText);
+//             balance.innerText = `${currentBalance} INR`;
+//             } else {
+//             currentBalance -= parseInt(price.innerText);
+//             console.log(currentBalance);
+//             balance.innerText = `${currentBalance} INR`;
+//         }
+//         console.log(totalBalance, currentBalance);
+//     }
+//     else {
+//         alert('Insufficient Balance! Work more!');
+//     }
+// });

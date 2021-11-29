@@ -12,13 +12,21 @@ body {
   color: #a3a5ae;
 }
 
-.card__title {
+.card-title {
   margin-bottom: 1.5rem;
   color: #4c4e61;
 }
 
 .toggle {
   display: none;
+}
+
+.image-holder {
+  max-width: 33%;
+}
+
+.img {
+  max-width: 100%;
 }
 
 @media (min-width: 768px) {

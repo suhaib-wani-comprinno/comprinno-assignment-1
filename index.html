@@ -21,47 +21,49 @@
 
             <div class="row w-100">
 
-                <div class="col-md mx-3 bg-white px-5 py-4 rounded shadow">
+                <div class="col-md mx-3 bg-white px-5 py-4 rounded shadow" id="balanceCard">
 
-                    <h2 class="card__title">Joe Banker</h2>
+                    <h2 class="card-title">Joe Banker</h2>
                     <div class="balance d-flex justify-content-between">
                         <span>Balance</span>
-                        <span id="bank-balance">1000 INR</span>
+                        <span id="availableBalance">1000 INR</span>
                     </div>
 
-                    <div class="toggle" id="outstanding">
-                        <span>Outstanding balance</span>
-                        <span id="loan-balance">0 INR</span>
+                    <div class="toggle" id="outstandingBalanceElement">
+                        <p>Pending Loan Amount</p>
+                        <p id="pendingLoanAmount">0 INR</p>
                     </div>
 
-                    <button type="button" class="btn btn-lg btn-outline-danger mt-5 w-100" id="loan-button">Get A
+                    <div class="toggle" id="totalBalanceElement">
+                        <p>Total Balance</p>
+                        <p id="totalBalanceDisplay">0 INR</p>
+                    </div>
+
+                    <button type="button" class="btn btn-lg btn-outline-danger mt-5 w-100" id="getLoanButton">Get A
                         Loan</button>
-
-                    <button type="button" class="toggle btn btn-lg btn-outline-danger w-100 mt-5"
-                        id="return-loan-button">Return Loan</button>
                 </div>
 
                 <div class="col-md mx-3 bg-white px-5 py-4 rounded shadow">
 
-                    <h2 class="card__title">Work</h2>
+                    <h2 class="card-title">Work</h2>
 
                     <div class="d-flex justify-content-between">
                         <span>Pay</span>
-                        <span id="pay">0 INR</span>
+                        <span id="payAmount">0 INR</span>
                     </div>
 
                     <button type="button" class="btn btn-lg btn-outline-success mt-5 w-100"
-                        id="bank-button">Bank</button>
+                        id="bankButton">Bank</button>
                     <button type="button" class="btn btn-lg btn-outline-warning mt-3 w-100"
-                        id="work-button">Work</button>
+                        id="workButton">Work</button>
                 </div>
 
                 <div class="col-md mx-3 bg-white px-5 py-4 rounded shadow">
 
-                    <h2 class="card__title">Laptop List</h2>
-                    <label for="laptop-dropdown">Select a laptop</label>
-                    <select class="mt-3 bg-dark text-white border-0 p-2 rounded" name="laptop" id="laptop-dropdown">
-                        <option value="1">---Choose a Laptop---</option>
+                    <h2 class="card-title">Laptop List</h2>
+                    <label for="laptopDropdown">Select a laptop: </label>
+                    <select class="mt-3 bg-dark text-white border-0 p-2 rounded" name="laptop" id="laptopDropdown">
+                        <option value="" id="defaultDrop">---Choose a Laptop---</option>
                     </select>
 
                     <ul class="my-3"id="specs"></ul>
@@ -72,14 +74,17 @@
 
         </div>
 
-        <div class="toggle bg-white mt-5 rounded shadow px-4 py-4" id="buy--card">
+        <div class="toggle container bg-white mt-5 rounded shadow px-4 py-4" id="buyCard">
 
-            <img src="https://www.freeiconspng.com/thumbs/laptop-png/laptop-png-26.png" alt="" aria-hidden="true">
-            <p id="desc"></p>
+            <h2 class= card-title>Laptop</h2>
 
-            <div class="price__buy">
-                <p class="toggle" id="pricing">Price: INR <span id="price"></span></p>
-                <button type="button" class="btn btn-primary btn-lg" id="buy-button">Buy Now</button>
+            <div id="temp">
+                <div class="border border-4 border-light p-5 image-holder" id="imageHolder"></div>
+                <p id="desc"></p>
+                <div class="price-buy">
+                    <p class="toggle" id="pricing">Price: INR <span id="price"></span></p>
+                    <button type="button" class="btn btn-primary btn-lg" id="buy-button">Buy Now</button>
+                </div>
             </div>
 
         </div>

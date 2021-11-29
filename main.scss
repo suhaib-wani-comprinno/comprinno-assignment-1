@@ -16,13 +16,21 @@ body{
     color : hsl(229, 6%, 66%);
 }
 
-.card__title{
+.card-title{
     margin-bottom : 1.5rem;
     color : $title-color;
 }
 
 .toggle{
     display : none;
+}
+
+.image-holder{
+    max-width : 33%;
+}
+
+.img{
+    max-width : 100%;
 }
 
 @media(min-width : 768px){
