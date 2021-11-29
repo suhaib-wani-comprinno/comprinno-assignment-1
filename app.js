@@ -120,7 +120,8 @@ const pricing = document.querySelector('#pricing');
 fetch('https://noroff-komputer-store-api.herokuapp.com/computers')
     .then(res => {
         return res.json();
-    }).then(data => {
+    })
+    .then(data => {
         for (let dat of data) {
             const createOption = document.createElement('option');
             createOption.innerText = dat.title;
@@ -141,7 +142,10 @@ fetch('https://noroff-komputer-store-api.herokuapp.com/computers')
                 pricing.classList.remove('toggle');
             })
         }
-    });
+    })
+    .catch(e =>{
+        alert('Error', e);
+    })
 
 const buyButton = document.querySelector('#buy-button');
 
